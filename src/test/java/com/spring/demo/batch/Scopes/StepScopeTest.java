@@ -69,11 +69,29 @@ public class StepScopeTest {
 
         @Autowired
         private StepBuilderFactory stepBuilderFactory;
+//
+//        @Bean
+//        public Job job(ItemReader<InputData> reader, ItemWriter<OutputData> itemWriter) {
+//            return jobBuilderFactory.get("myJob")
+//                    .start(readerStep(reader,itemWriter))
+//                    .build();
+//        }
+//
+//        @Bean
+//        public Step readerStep(ItemReader<InputData> reader, ItemWriter<OutputData> writer) {
+//            SimpleStepBuilder<InputData, OutputData> simpleStepBuilder
+//                    = stepBuilderFactory.get("readJsonStep")
+//                    .chunk(1);
+//
+//            return simpleStepBuilder.reader(reader(null))
+//                    .processor(processor())
+//                    .writer(writer(null)).build();
+//        }
 
         @Bean
         public Job job(ItemReader<InputData> reader, ItemWriter<OutputData> itemWriter) {
             return jobBuilderFactory.get("myJob")
-                    .start(readerStep(reader,itemWriter))
+                    .start(readerStep(reader, itemWriter))
                     .build();
         }
 
@@ -83,11 +101,10 @@ public class StepScopeTest {
                     = stepBuilderFactory.get("readJsonStep")
                     .chunk(1);
 
-            return simpleStepBuilder.reader(reader(null))
+            return simpleStepBuilder.reader(reader)
                     .processor(processor())
-                    .writer(writer(null)).build();
+                    .writer(writer).build();
         }
-
         private ItemProcessor<InputData, OutputData> processor() {
             return inputData -> {
                 OutputData outputData = new OutputData();
